@@ -1,5 +1,6 @@
 class Deck < Array
   attr_reader :joker_a, :joker_b
+
   def initialize
     Card::SUITS.each do |s|
       Card::FACES.each do |f|
@@ -32,7 +33,6 @@ class Deck < Array
 
   def triple_cut_around_jokers
     top_joker_position, bottom_joker_position = [ self.index(@joker_a), self.index(@joker_b) ].sort
-    #puts("top joker position #{top_joker_position}, bottom joker position #{bottom_joker_position}")
 
     cards_above_top_joker = self[0..(top_joker_position-1)]
     cards_below_bottom_joker = self[(bottom_joker_position+1)..self.length]

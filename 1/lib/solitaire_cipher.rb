@@ -21,7 +21,7 @@ class SolitaireCipher
   end
 
   def convert_numbers_to_message(numbers)
-    self.split_message(
+    split_message(
       numbers.map { |n| (n + '@'.ord).chr }.join
     )
   end
@@ -31,12 +31,12 @@ class SolitaireCipher
   end
 
   def encrypt_message(message)
-    keystream = self.generate_keystream(message_length(message))
-    numeric_keystream = self.convert_message_to_numbers(keystream)
-    numeric_message = self.convert_message_to_numbers(self.split_message(message))
+    keystream = generate_keystream(message_length(message))
+    numeric_keystream = convert_message_to_numbers(keystream)
+    numeric_message = convert_message_to_numbers(split_message(message))
 
-    numeric_result = self.add_keystream_to_message(numeric_message, numeric_keystream)
-    self.convert_numbers_to_message(numeric_result)
+    numeric_result = add_keystream_to_message(numeric_message, numeric_keystream)
+    convert_numbers_to_message(numeric_result)
   end
   
   def message_length(message)
@@ -44,11 +44,11 @@ class SolitaireCipher
   end
 
   def decrypt_message(message)
-    keystream = self.generate_keystream(message_length(message))
-    negative_keystream = self.convert_message_to_numbers(keystream).map { |n| n * -1 }
-    numeric_message = self.convert_message_to_numbers(message)
+    keystream = generate_keystream(message_length(message))
+    negative_keystream = convert_message_to_numbers(keystream).map { |n| n * -1 }
+    numeric_message = convert_message_to_numbers(message)
     
-    numeric_result = self.add_keystream_to_message(numeric_message, negative_keystream)
-    self.convert_numbers_to_message(numeric_result)
+    numeric_result = add_keystream_to_message(numeric_message, negative_keystream)
+    convert_numbers_to_message(numeric_result)
   end
 end
