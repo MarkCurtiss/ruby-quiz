@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'  #i hate you, rake
+require 'optparse'
+require 'solitaire_cipher' 
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: solitaire_cipher [options]"
+
+  opts.on('e', '--encrypt MESSAGE', 'Encrypt the supplied message using an unkeyed deck') do |e|
+    options[:encrypt] = e
+  end
+
+  opts.on('d', '--decrypt MESSAGE', 'Decrypt the supplied message using an unkeyed deck') do |d|
+    options[:decrypt] = d
+  end
+end.parse!
+
+cipher = SolitaireCipher.new
+if options[:encrypt]
+  puts(cipher.encrypt_message(options[:encrypt]))
+elsif options[:decrypt]
+  puts(cipher.decrypt_message(options[:decrypt]))
+else
+  abort('You must provide either --encrypt or --decrypt')
+end
